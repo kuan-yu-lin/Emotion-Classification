@@ -35,7 +35,7 @@ class perceptron:
                 linear_output = np.dot(index, self.weights) + self.bias
                 y_predicted = self.activation_func(linear_output)
 
-                update = self.lr * (y[index] - y_predicted)
+                update = self.lr * (y_true[index] - y_predicted)
 
                 self.weights += update * value
                 self.bias += update
