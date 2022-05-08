@@ -6,4 +6,4 @@ def f_score_eval(pred_values, actul_values):
     precision = tp / (tp + fp)
     recall = tp / (tp + fn)
     f = 2 * precision * recall / (precision + recall)
-    return f
+    return precision, recall, f
