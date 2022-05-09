@@ -5,8 +5,7 @@ import string
 import numpy as np
 import pandas as pd
 from perceptron_from_scratch import perceptron
-from evaluation import f_score_eval
-from evalu import confusion_matrix, precision, recall, f1score
+from evaluation import confusion_matrix, precision, recall, f1score
 
 
 def load_train_dataset():
