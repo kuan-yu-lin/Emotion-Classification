@@ -17,14 +17,11 @@ class perceptron:
         # init parameters
         self.weights = np.zeros(n_features)
         self.bias = 0
-        y_ = np.array([1 if i == 'joy' else 0 for i in y])
         for i in range(self.n_iter):
             for index, value in enumerate(X):
                 linear_output = np.dot(value, self.weights) + self.bias
                 y_predicted = self.activation_func(linear_output)
-
-                update = self.lr * (y_[index] - y_predicted)
-
+                update = self.lr * (y[index] - y_predicted)
                 self.weights += update * value
                 self.bias += update
 

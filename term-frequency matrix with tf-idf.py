@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 from perceptron_from_scratch import perceptron
 from evaluation import confusion_matrix, precision, recall, f1score
+from BOG import BOG
 
 
 def load_train_dataset():
@@ -60,7 +61,6 @@ class BOG(object):
 
         return tfv
 
-
     def tf_idf_matrix(self, X):
         # create document-frequency array
         tfv = self.term_freq_matrix(X)
@@ -85,11 +85,10 @@ reset_y = b.reset_target(y)
 
 
 p = perceptron()
-p.fit(tfidf[:2000], y[:2000])
-y_pred = p.predict(tfidf[2000:2400])
+p.fit(tfidf[:3000], y[:3000])
+y_pred = p.predict(tfidf[3000:3500])
 
 
-m = confusion_matrix(y_pred, reset_y[2000:2400])
-fscore = f1score(y_pred, reset_y[2000:2400])
+m = confusion_matrix(y_pred, reset_y[3000:3500])
+fscore = f1score(y_pred, reset_y[3000:3500])
 print(m, fscore)
-
