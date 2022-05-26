@@ -5,7 +5,9 @@ class BOG(object):
 
     def __init__(self, emotion='joy'):
         self.emotion = emotion
+        # list of unique words in the docs
         self.unique_word = None
+        # dictionary that keeps track of word frequenciess
         self.word_dict = None
 
     def reset_target(self, y):
