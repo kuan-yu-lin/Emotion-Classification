@@ -26,7 +26,7 @@ y_test, X_test = load_dataset('isear-test.txt')
 
 
 # initialize the BOG for emotion == 'guilt'
-b = BOG('guilt')
+b = BOG('fear')
 b.extract_word(X_train)
 # get term-frequency matrix
 tfv = b.term_freq_matrix(X_train)

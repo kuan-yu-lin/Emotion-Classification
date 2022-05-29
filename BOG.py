@@ -7,8 +7,6 @@ class BOG(object):
         self.emotion = emotion
         # list of unique words in the docs
         self.unique_word = None
-        # dictionary that keeps track of word frequenciess
-        self.word_dict = None
 
     def reset_target(self, y):
         reset_y = [1 if i == self.emotion else 0 for i in y]
@@ -17,7 +15,7 @@ class BOG(object):
     # extract word to get the vocabulary of the training data
     def extract_word(self, X):
         unique_word = []
-        word_dict = {}
+
         for text in X:
             for token in text:
                 # remove any number in the text
@@ -26,9 +24,9 @@ class BOG(object):
                         unique_word.append(token)
 
         self.unique_word = unique_word
-        self.word_dict = word_dict
 
     # create tf matrix, will later serve as input for the classifier
+
     def term_freq_matrix(self, X):
         # get the dimension of the term-frequency matrix
         M = len(X)
