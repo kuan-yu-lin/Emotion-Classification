@@ -25,15 +25,16 @@ y_train, X_train = load_dataset('isear-train.txt')
 y_test, X_test = load_dataset('isear-test.txt')
 
 
-b = BOG_tfidf('fear')
+b = BOG_tfidf('guilt')
 b.extract_word(X_train)
 tfv = b.tf_idf_matrix(X_train)
 tfv_test = b.tf_idf_matrix(X_test)
 y_train = b.reset_target(y_train)
 y_test = b.reset_target(y_test)
 
-
-p = perceptron()
+lr = 0.01
+nt = 10
+p = perceptron(learning_rate=lr, n_iter=nt)
 p.fit(tfv, y_train)
 y_pred = p.predict(tfv_test)
 
@@ -41,5 +42,7 @@ y_pred = p.predict(tfv_test)
 m = confusion_matrix(y_pred, y_test)
 fscore = f1score(y_pred, y_test)
 print(m, fscore)
+print('learning rate: ', lr)
+print('n_iter: ', nt)
 
 print("--- %s seconds ---" % (time.time() - start_time))

@@ -5,7 +5,6 @@ class BOG_tfidf(object):
     def __init__(self, emotion='joy'):
         self.emotion = emotion
         self.unique_word = None
-        self.word_dict = None
 
     def reset_target(self, y):
         reset_y = [1 if i == self.emotion else 0 for i in y]
@@ -13,7 +12,6 @@ class BOG_tfidf(object):
 
     def extract_word(self, X):
         unique_word = []
-        word_dict = {}
         for text in X:
             for token in text:
                 if token.isnumeric() == False:
@@ -21,7 +19,6 @@ class BOG_tfidf(object):
                         unique_word.append(token)
 
         self.unique_word = unique_word
-        self.word_dict = word_dict
 
     def tf_idf_matrix(self, X):
         M = len(X)
