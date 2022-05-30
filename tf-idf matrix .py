@@ -3,8 +3,9 @@ from perceptron_from_scratch import perceptron
 from evaluation import confusion_matrix,  f1score
 from BOG_tfidf import BOG_tfidf
 import time
+import pandas as pd
 
-start_time = time.time()
+# start_time = time.time()
 
 # load the training data
 def load_dataset(data):
@@ -21,9 +22,9 @@ def load_dataset(data):
     return y, X
 
 
+
 y_train, X_train = load_dataset('isear-train.txt')
 y_test, X_test = load_dataset('isear-test.txt')
-
 
 b = BOG_tfidf('guilt')
 b.extract_word(X_train)
@@ -32,17 +33,24 @@ tfv_test = b.tf_idf_matrix(X_test)
 y_train = b.reset_target(y_train)
 y_test = b.reset_target(y_test)
 
-lr = 0.01
-nt = 10
-p = perceptron(learning_rate=lr, n_iter=nt)
-p.fit(tfv, y_train)
-y_pred = p.predict(tfv_test)
 
-# evaluate the performance of the classifier
-m = confusion_matrix(y_pred, y_test)
-fscore = f1score(y_pred, y_test)
-print(m, fscore)
-print('learning rate: ', lr)
-print('n_iter: ', nt)
+fscore_lst = []
+for nt in range(1, 51):
+    
+    p = perceptron(learning_rate=0.01, n_iter=nt)
+    p.fit(tfv, y_train)
+    y_pred = p.predict(tfv_test)
 
-print("--- %s seconds ---" % (time.time() - start_time))
+    # evaluate the performance of the classifier
+    # m = confusion_matrix(y_pred, y_test)
+    fscore = f1score(y_pred, y_test)
+    fscore_lst += [fscore]
+    # print(m, fscore)
+
+
+data = {'F1-score': fscore_lst
+        }
+
+df = pd.DataFrame(data)
+df.index += 1
+print(df)
