@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class BOG(object):
+class BOW(object):
 
     def __init__(self, emotion='joy'):
         self.emotion = emotion

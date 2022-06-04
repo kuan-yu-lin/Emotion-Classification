@@ -1,7 +1,7 @@
 import string
 from perceptron_from_scratch import perceptron
 from evaluation import confusion_matrix,  f1score
-from BOG import BOG
+from BOW import BOW
 
 
 # load function
@@ -26,7 +26,7 @@ y_test, X_test = load_dataset('isear-test.txt')
 
 
 # initialize the BOG for emotion == 'guilt'
-b = BOG('fear')
+b = BOW('fear')
 b.extract_word(X_train)
 # get term-frequency matrix
 tfv = b.term_freq_matrix(X_train)
