@@ -4,6 +4,8 @@ from evaluation import confusion_matrix,  f1score
 from BOG_tfidf import BOG_tfidf
 import time
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 # start_time = time.time()
 
@@ -21,8 +23,6 @@ def load_dataset(data):
                 '', '', string.punctuation)).lower().split())
     return y, X
 
-
-
 y_train, X_train = load_dataset('isear-train.txt')
 y_test, X_test = load_dataset('isear-test.txt')
 
@@ -35,9 +35,9 @@ y_test = b.reset_target(y_test)
 
 
 fscore_lst = []
-for nt in range(1, 51):
-    
-    p = perceptron(learning_rate=0.01, n_iter=nt)
+learning_rate_lst = [0.01, 0.02, 0.03, 0.04, 0.05]
+for lr in learning_rate_lst:   
+    p = perceptron(learning_rate=lr, n_iter=100)
     p.fit(tfv, y_train)
     y_pred = p.predict(tfv_test)
 
