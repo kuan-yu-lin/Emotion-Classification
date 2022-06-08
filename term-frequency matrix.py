@@ -2,6 +2,7 @@ import string
 from perceptron_from_scratch import perceptron
 from evaluation import confusion_matrix,  f1score
 from BOW import BOW
+import pandas as pd
 
 
 # load function
@@ -26,7 +27,7 @@ y_test, X_test = load_dataset('isear-test.txt')
 
 
 # initialize the BOG for emotion == 'guilt'
-b = BOW('fear')
+b = BOW('sadness')
 b.extract_word(X_train)
 # get term-frequency matrix
 tfv = b.term_freq_matrix(X_train)
@@ -45,3 +46,21 @@ y_pred = p.predict(tfv_test)
 m = confusion_matrix(y_pred, y_test)
 fscore = f1score(y_pred, y_test)
 print(m, fscore)
+
+'''
+# get the fscore of all different iterations and learning rates
+fscore_lst = []
+for niter in range(51, 71):   
+    p = perceptron(learning_rate=0.01, n_iter=niter)
+    p.fit(tfv, y_train)
+    y_pred = p.predict(tfv_test)
+
+    fscore = f1score(y_pred, y_test)
+    fscore_lst += [fscore]
+
+data = {'F1-score': fscore_lst}
+
+df = pd.DataFrame(data)
+df.index += 1
+print(df)
+'''

@@ -8,16 +8,21 @@ plt.rcParams["figure.autolayout"] = True
 # Make a list of columns
 columns = ['JOY', 'ANGER', 'SHAME', 'DISGUST', 'SADNESS', 'FEAR', 'GUILT']
 
-# Read a CSV file
-df = pd.read_csv("tf-idf-learningrate.csv", usecols=columns)
+# Read a CSV file from the 'result' folder
+df = pd.read_csv("result/BOW-niter.csv", usecols=columns)
 
 # Plot the lines
 df.plot()
-plt.title('Tf-idf with Different Learning Rates')
-plt.xlabel('Learning Rates')
-plt.ylabel('F1 Score')
 
-values = ['0.01', '0.02', '0.03', '0.04', '0.05']
-plt.xticks([0, 1, 2, 3, 4], values)
+# Set the title, labels and the position of the legend
+plt.title('BOW with Different Iterations')
+plt.xlabel('Iterations')
+plt.ylabel('F1 Score')
+plt.legend(loc='upper right')
+
+# Define values of x-axis of learning rates
+# Comment this part when plotting iterations
+#values = ['0.01', '0.02', '0.03', '0.04', '0.05']
+#plt.xticks([0, 1, 2, 3, 4], values)
 
 plt.show()

@@ -1,6 +1,6 @@
 import numpy as np
 
-class BOG_tfidf(object):
+class tfidf(object):
 
     def __init__(self, emotion='joy'):
         self.emotion = emotion
@@ -20,7 +20,7 @@ class BOG_tfidf(object):
 
         self.unique_word = unique_word
 
-    def tf_idf_matrix(self, X):
+    def tfidf_matrix(self, X):
         M = len(X)
         V = len(self.unique_word)
         tfv = np.zeros((M, V))
