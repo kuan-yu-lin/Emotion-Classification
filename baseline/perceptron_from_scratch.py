@@ -4,7 +4,7 @@ import numpy as np
 
 class perceptron:
 
-    def __init__(self, learning_rate=0.01, n_iter=50):
+    def __init__(self, learning_rate=0.01, n_iter=100):
         self.weights = None
         self.bias = None
         self.lr = learning_rate

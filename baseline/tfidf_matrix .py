@@ -1,12 +1,8 @@
-# This is the version for evaluating tfidf implement.
-# We implement tfidf, perceptron and f1_score from sklearn library.
-
-
-from sklearn.linear_model import Perceptron
-from tfidf_newForEval import tfidf
-from sklearn.metrics import f1_score
-import os.path
-
+from perceptron_from_scratch import perceptron
+from evaluation import confusion_matrix,  f1score
+from tfidf import tfidf
+import string
+import os
 
 # define a function for loading the data
 def load_dataset(data):
@@ -18,17 +14,20 @@ def load_dataset(data):
     for row in rows:
         if len(row) == 2:
             y.append(row[0])
-            X.append(row[1])
+            X.append(row[1].translate(str.maketrans(
+                '', '', string.punctuation)).lower().split())
     return y, X
 
+train_path = os.path.abspath('data/train.txt')
+test_path = os.path.abspath('data/test.txt')
 
 # load the training data
-y_train, X_train = load_dataset(os.path.dirname(__file__) + '/../isear-train.txt')
+y_train, X_train = load_dataset(train_path)
 # load the testing data
-y_test, X_test = load_dataset(os.path.dirname(__file__) + '/../isear-test.txt')
+y_test, X_test = load_dataset(test_path)
 
 # initialize tfidf with one emotion
-b = tfidf('joy')
+b = tfidf('guilt')
 # get the number of feature from training data
 b.extract_word(X_train)
 
@@ -40,11 +39,12 @@ X_test_tm = b.tfidf_matrix(X_test)
 y_train_b = b.reset_target(y_train)
 y_test_b = b.reset_target(y_test)
 
-# initialize the perceptron model
-p = Perceptron()
+# initialize perceptron models
+p = perceptron()
 p.fit(X_train_tm, y_train_b)
 y_pred = p.predict(X_test_tm)
 
 # evaluate the performance of the classifier
-fscore = f1_score(y_pred, y_test_b)
-print(fscore)
+m = confusion_matrix(y_pred, y_test_b)
+fscore = f1score(y_pred, y_test_b)
+print(m, fscore)

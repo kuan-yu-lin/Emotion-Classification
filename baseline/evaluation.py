@@ -1,6 +1,6 @@
 import numpy as np
 
-
+# created by Tzu-Ju
 # confusion matrix ([[TP, FP], [FN, TN]])
 def confusion_matrix(y_pred, y_true):
     TP = 0
@@ -44,3 +44,16 @@ def f1score(y_pred, y_true):
     r = recall(y_pred, y_true)
     f1 = (2*p*r) / (p + r)
     return f1
+
+'''
+# created by Kuan-Yu
+# this version doesn't fit 
+def f_score_eval(pred_values, actul_values):
+    tp = len(list(set(pred_values) & set(actul_values)))
+    fp = len(list(set(pred_values) - set(actul_values)))
+    fn = len(list(set(actul_values) - set(pred_values)))
+    precision = tp / (tp + fp)
+    recall = tp / (tp + fn)
+    f = 2 * precision * recall / (precision + recall)
+    return precision, recall, f
+''' 
