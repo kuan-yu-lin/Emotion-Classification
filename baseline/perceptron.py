@@ -1,3 +1,6 @@
+'''
+Author: Tzu-Ju Lin
+'''
 # source:https://www.python-engineer.com/courses/mlfromscratch/06_perceptron/
 import numpy as np
 

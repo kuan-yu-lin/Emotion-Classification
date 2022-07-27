@@ -1,5 +1,8 @@
+'''
+Author: Kuan-Yu Lin
+'''
 import string
-from perceptron_from_scratch import perceptron
+from perceptron import perceptron
 from evaluation import confusion_matrix,  f1score
 from BOW import BOW
 from tfidf import tfidf
@@ -20,6 +23,7 @@ def load_dataset(data):
                 '', '', string.punctuation)).lower().split())
 
     return y, X
+
 
 if __name__ == "__main__":
     '''
@@ -62,7 +66,7 @@ if __name__ == "__main__":
 
     # initialize perceptron models
     p = perceptron()
-    
+
     # apply the training data preprocessed by BOW
     p.fit(tfv, y_train)
     y_pred = p.predict(tfv_test)
@@ -81,6 +85,6 @@ if __name__ == "__main__":
 
     print(f'This is the classifier for {emotion}')
     print('The confusion matrix of classifier with BOW: ', m_bow)
-    print('The f1-score of classifier with BOW: ', f1_bow)  
+    print('The f1-score of classifier with BOW: ', f1_bow)
     print('The confusion matrix of classifier with tf-idf: ', m_tfidf)
     print('The f1-score of classifier with tf-idf: ', f1_tfidf)

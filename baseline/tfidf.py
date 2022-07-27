@@ -1,4 +1,8 @@
+'''
+Author: Kuan-Yu Lin
+'''
 import numpy as np
+
 
 class tfidf(object):
 
@@ -45,7 +49,7 @@ class tfidf(object):
         # create inversed document-frequency array
         for i, d in enumerate(dfa):
             idf[i] = np.log(len(X)/(d + 1))
-        
+
         r, c = tfv.shape
         # initialize a zero matrix
         tfidf = np.zeros(np.shape(tfv))
