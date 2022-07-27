@@ -8,7 +8,7 @@
 * [Kuan-Yu Lin](https://github.com/kuan-yu-lin)
 * [Tzu-Ju (Jenny) Lin](https://github.com/TzuJuLin)
 
-##Project Information
+## Project Information
 
 ### Description
 
