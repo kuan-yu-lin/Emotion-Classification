@@ -27,7 +27,39 @@ The ISEAR dataset can be found [here](https://www.unige.ch/cisa/research/materia
 |disgust|
 |sadness|
 
+### Results from experiments
 
+|         Emotions        | f1-score |
+|:-----------------------:|:--------:|
+|    BERT<sub>pure</sub>  |   0.71   |
+|     BERT<sub>T5</sub>   |   0.69   |
+|     BERT<sub>emo</sub>  |   0.70   |
+| MLP<sub>BERT+pure</sub> |   0.60   |
+
+## Run
+
+### Baseline
+
+    python3 ./baseline/main.py
+
+### BERT<sub>pure</sub>
+
+    python3 ./models/bert_main.py
+
+### BERT<sub>T5</sub>
+
+    # data augmentation
+    python3 ./models/t5_paraphrase.py
+
+    python3 ./models/bert_main.py
+
+### BERT<sub>emo</sub>
+
+    python3 ./models/bert_main.py
+
+### MLP + BERT<sub>emo</sub>
+
+    python3 ./models/bert_main.py
 
 
 
