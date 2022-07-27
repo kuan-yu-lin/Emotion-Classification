@@ -1,6 +1,8 @@
+'''
+Author: Tzu-Ju Lin
+'''
 import numpy as np
 
-# created by Tzu-Ju
 # confusion matrix ([[TP, FP], [FN, TN]])
 def confusion_matrix(y_pred, y_true):
     TP = 0
@@ -46,7 +48,7 @@ def f1score(y_pred, y_true):
     return f1
 
 '''
-# created by Kuan-Yu
+# Author: Kuan-Yu Lin
 # this version doesn't fit 
 def f_score_eval(pred_values, actul_values):
     tp = len(list(set(pred_values) & set(actul_values)))
