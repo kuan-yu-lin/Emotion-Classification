@@ -1,5 +1,5 @@
 '''
-Author: Kuan-Yu Lin
+Authors: Tzu-Ju Lin and Kuan-Yu Lin
 '''
 import string
 from perceptron import perceptron
