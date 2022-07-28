@@ -43,18 +43,16 @@ The ISEAR dataset can be found [here](https://www.unige.ch/cisa/research/materia
 1. download the dataset to the folder "data"
 2. name the training data with "train.txt" and testing data with test.txt
 3. run
+```
     python3 ./baseline/main.py
-
+```
 ### BERT<sub>pure</sub>
 
     python3 ./models/bert_main.py
 
 ### BERT<sub>T5</sub>
 
-    # data augmentation
-    python3 ./models/t5_paraphrase.py
-
-    python3 ./models/bert_main.py
+    python3 ./models/bert_t5.py
 
 ### BERT<sub>emo</sub>
 
