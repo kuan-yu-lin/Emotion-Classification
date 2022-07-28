@@ -3,7 +3,7 @@ Authors: Tzu-Ju Lin and Kuan-Yu Lin
 '''
 import string
 from perceptron import perceptron
-from evaluation import confusion_matrix,  f1score
+from evaluation import confusion_matrix,  f1score, precision, recall
 from BOW import BOW
 from tfidf import tfidf
 import os
@@ -26,13 +26,9 @@ def load_dataset(data):
 
 
 if __name__ == "__main__":
-    '''
-    The ISEAR dataset we used can be found with the link:
-    https://www.unige.ch/cisa/research/materials-and-online-research/research-material/
-    After downloading the files, change the value of train_data_file_name to the name of the training data. Change the value of test_data_file_name to the name of the testing data.
-    '''
-    train_data_file_name = None
-    test_data_file_name = None
+
+    train_data_file_name = './data/train.txt'
+    test_data_file_name = './data/test.txt'
 
     train_path = os.path.abspath(train_data_file_name)
     test_path = os.path.abspath(test_data_file_name)
@@ -42,49 +38,68 @@ if __name__ == "__main__":
     y_test, X_test = load_dataset(test_path)
 
     # select the emotion for classifier
-    emotion = 'guilt'
-
-    # initialize the BOG
-    b = BOW(emotion)
-    b.extract_word(X_train)
-    # get term-frequency matrix
-    tfv = b.term_freq_matrix(X_train)
-    tfv_test = b.term_freq_matrix(X_test)
-    # modify the labels in the datasets into binary for the target emotion
-    y_train = b.reset_target(y_train)
-    y_test = b.reset_target(y_test)
-
-    # initialize tfidf
-    b = tfidf(emotion)
-    b.extract_word(X_train)
-    # get tfidf matrix
-    X_train_tm = b.tfidf_matrix(X_train)
-    X_test_tm = b.tfidf_matrix(X_test)
-    # modify the labels in the datasets into binary for the target emotion
-    y_train_b = b.reset_target(y_train)
-    y_test_b = b.reset_target(y_test)
+    emotion = input('Which emotion you want to classify?')
 
     # initialize perceptron models
     p = perceptron()
 
+    '''
+    Perceptron with BOW
+    '''
+    # initialize the BOW
+    b = BOW(emotion)
+    b.extract_word(X_train)
+    # get term-frequency matrix
+    X_train_b = b.term_freq_matrix(X_train)
+    X_test_b = b.term_freq_matrix(X_test)
+    # modify the labels in the datasets into binary for the target emotion
+    y_train_b = b.reset_target(y_train)
+    y_test_b = b.reset_target(y_test)
+
     # apply the training data preprocessed by BOW
-    p.fit(tfv, y_train)
-    y_pred = p.predict(tfv_test)
+    p.fit(X_train_b, y_train_b)
+    y_pred_b = p.predict(X_test_b)
 
+    # evaluate the performance of the classifier
+    cm_bow = confusion_matrix(y_pred_b, y_test_b)
+    precision_bow = precision(y_pred_b, y_test_b)
+    recall_bow = recall(y_pred_b, y_test_b)
+    f1_bow = f1score(y_pred_b, y_test_b)
+
+    '''
+    Perceptron with tfidf
+    '''
+    # initialize tfidf
+    t = tfidf(emotion)
+    t.extract_word(X_train)
+    # get tfidf matrix
+    X_train_t = t.tfidf_matrix(X_train)
+    X_test_t = t.tfidf_matrix(X_test)
+    # modify the labels in the datasets into binary for the target emotion
+    y_train_t = t.reset_target(y_train)
+    y_test_t = t.reset_target(y_test)
+  
     # apply the training data preprocessed by tfidf
-    p.fit(X_train_tm, y_train_b)
-    y_pred = p.predict(X_test_tm)
+    p.fit(X_train_t, y_train_t)
+    y_pred_t = p.predict(X_test_t)
 
     # evaluate the performance of the classifier
-    m_bow = confusion_matrix(y_pred, y_test_b)
-    f1_bow = f1score(y_pred, y_test_b)
-
-    # evaluate the performance of the classifier
-    m_tfidf = confusion_matrix(y_pred, y_test)
-    f1_tfidf = f1score(y_pred, y_test)
-
-    print(f'This is the classifier for {emotion}')
-    print('The confusion matrix of classifier with BOW: ', m_bow)
-    print('The f1-score of classifier with BOW: ', f1_bow)
-    print('The confusion matrix of classifier with tf-idf: ', m_tfidf)
-    print('The f1-score of classifier with tf-idf: ', f1_tfidf)
+    cm_tfidf = confusion_matrix(y_pred_t, y_test_t)
+    precision_tfidf = precision(y_pred_t, y_test_t)
+    recall_tfidf = recall(y_pred_t, y_test_t)
+    f1_tfidf = f1score(y_pred_t, y_test_t)
+    
+    # produce the results
+    print(f'This is the classifier for {emotion}.')
+    print('the results of perceptron with BOW ----')
+    print('confusion matrix: ')
+    print(cm_bow)
+    print('precision: ', precision_bow)
+    print('recall: ', recall_bow)
+    print('f1-score: ', f1_bow)
+    print('the results of perceptron with tfidf ----')
+    print('confusion matrix: ')
+    print(cm_tfidf)
+    print('precision: ', precision_tfidf)
+    print('recall: ', recall_tfidf)
+    print('f1-score: ', f1_tfidf)
