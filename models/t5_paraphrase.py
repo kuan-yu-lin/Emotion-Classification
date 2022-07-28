@@ -3,7 +3,9 @@ Author: Kuan-Yu Lin
 '''
 from transformers import AutoModelWithLMHead, AutoTokenizer
 import csv
+import os
 
+# get the fine-tune T5 model for paraphrasing
 tokenizer = AutoTokenizer.from_pretrained("mrm8488/t5-small-finetuned-quora-for-paraphrasing")
 model = AutoModelWithLMHead.from_pretrained("mrm8488/t5-small-finetuned-quora-for-paraphrasing")
 
@@ -15,39 +17,55 @@ def paraphrase(text, max_length=128):
 
     return preds
 
-row_lst = []
-with open('emotion_data/train.csv', newline='') as csvfile:
-    datareader = csv.reader(csvfile, delimiter=',')
-    for row in datareader:
-        row_lst.append(row)
+def load_train_data(filename):
+    '''
+    function to load the training data
 
-emo_lst = []
-eve_lst = []
-for i in range(len(row_lst)):
-    emo_lst.append(row_lst[i][0])
-    eve_lst.append("paraphrase: " + row_lst[i][1])
+    argument: string
+        - file name of training data (file type: csv)
 
-new_eve_lst = []    
-for i, e in enumerate(eve_lst):
-    preds = paraphrase(e)
-    for pred in preds:
-        new_eve = []
-        new_eve.append(emo_lst[i])
-        new_eve.append(pred)
-        new_eve_lst.append(new_eve)
+    return: a list
+        - encode each row of data into a list with two items, i.e. label and data entry.
+    '''
+    train_file_name = './data/' + filename
+    train_path = os.path.abspath(train_file_name)
 
+    row_lst = []
+    with open(train_path, newline='') as csvfile:
+        datareader = csv.reader(csvfile, delimiter=',')
+        for row in datareader:
+            row_lst.append(row)
 
-#print('0: ', emo_lst[0])
-#print('0: ', eve_lst[0])
-#print('1: ', emo_lst[1])
-#print('1: ', eve_lst[1])
-#print('2: ', emo_lst[2])
-#print('2: ', eve_lst[2])
+    return row_lst
 
-print(new_eve_lst[0])
-print(new_eve_lst[1])
+def init_t5(filename):    
+    '''
+    function to produce the augmented training data by paraphrasing with T5 model
+    
+    argument: string
+        - file name of training data (file type: csv)
+    '''
+    row_lst = load_train_data(filename)
+    
+    emo_lst = []
+    eve_lst = []
+    for i in range(len(row_lst)):
+        emo_lst.append(row_lst[i][0])
+        eve_lst.append("paraphrase: " + row_lst[i][1])
 
-with open('emotion_data/train_para.csv', 'w', newline='') as csvfile:
-    datawriter = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
-    for i in range(len(new_eve_lst)):
-        datawriter.writerow(new_eve_lst[i])
+    new_eve_lst = []    
+    for i, e in enumerate(eve_lst):
+        preds = paraphrase(e)
+        for pred in preds:
+            new_eve = []
+            new_eve.append(emo_lst[i])
+            new_eve.append(pred)
+            new_eve_lst.append(new_eve)
+
+    train_para_file_name = './data/train_para.csv'
+    train_para_path = os.path.abspath(train_para_file_name)
+
+    with open(train_para_path, 'w', newline='') as csvfile:
+        datawriter = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+        for i in range(len(new_eve_lst)):
+            datawriter.writerow(new_eve_lst[i])

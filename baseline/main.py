@@ -3,7 +3,7 @@ Authors: Tzu-Ju Lin and Kuan-Yu Lin
 '''
 import string
 from perceptron import perceptron
-from evaluation import confusion_matrix,  f1score, precision, recall
+from evaluation import confusion_matrix, f1score, precision, recall
 from BOW import BOW
 from tfidf import tfidf
 import os
