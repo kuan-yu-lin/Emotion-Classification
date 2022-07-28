@@ -50,25 +50,26 @@ The ISEAR dataset can be found [here](https://www.unige.ch/cisa/research/materia
 
 1. download the dataset and insert the correct datapath in main.py 
 2. run
-
+```
     python3 ./models/bert_main.py
-
+```
 ### BERT<sub>T5</sub>
 
 1. download the dataset and preprocess it with bert_t5.py
 2. insert the correct datapath in main.py
 3. run
-
+```
     python3 ./models/bert_t5.py
-
+    python3 ./models/main.py
+```
 ### BERT<sub>emo</sub>
 
 1. download the dataset and preprocess it with emotion_lexicon.py
 2. insert the correct datapath in main.py 
 3. run
-
+```
     python3 ./models/bert_main.py
-
+```
 ### MLP + BERT<sub>emo</sub>
 
 1. download the dataset and preprocess it with emotion_lexicon.py
@@ -76,8 +77,10 @@ The ISEAR dataset can be found [here](https://www.unige.ch/cisa/research/materia
 3. concatenate the results from 1 and 2, save as a new dataset
 4. insert the datapath of the concatenated in MLP.py
 5. run
-
-    python3 ./models/bert_main.py
-
+```
+    python3 ./model/emotion_lexicon.py
+    python3 ./model/bert_feature.py
+    python3 ./models/MLP.py
+```
 
 
