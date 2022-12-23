@@ -1,4 +1,4 @@
-# emotion-classification
+# Emotion-Classification
 
 ###### University Stuttgart
 ###### CL Team Lab Project, Sommer 2022
